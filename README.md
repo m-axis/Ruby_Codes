@@ -17,8 +17,8 @@ To use SOAPService class , follow the steps below<br/>
              namespace: 'http://xyz_WSD__LINK'<br/>
              template:  'location of request template relative to working directory'<br/>
 5) Define a parameter inside template file using <%= %> tag.<br/>
-       Example:  <Envelope><br/>
-                      <body><br/>
+       Example:  \<Envelope\><br/>
+                      \<body\><br/>
                        <input><%= input_field %></input><br/>
                       </body> <br/>
                  </Envelope><br/>
