@@ -7,7 +7,7 @@ To use SOAPService class , follow the steps below
 4) Define soap properties in service_config.yml file:
      a) Example 1, in case of no wsdl.
           My_Soap_Service: 
-             namespace: 'http://xyzSoapServiceNamespace' \n
+             namespace: 'http://xyzSoapServiceNamespace' <br/>
              endpoint:   'soap_end_point'
              action:      'Soap action here'
              basic_auth:   ['usr', 'pass']
