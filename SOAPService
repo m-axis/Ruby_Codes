@@ -1,0 +1,8 @@
+require 'savon'require 'yaml'
+class SOAPService
+  def initialize    @wsdl, @namespace, @endpoint, @action, @template, @request, @basic_auth = nil, nil, nil, nil, nil, nil  end
+  def define_globals(service)    globals_ = YAML.load_file(Dir.pwd + "/service_config.yml")    global__ = globals_["#{service}"]    @namespace = global__['namespace']    @endpoint = global__['endpoint']    @action = global__['action']    @template = global__['template']    @basic_auth = global__['basic_auth'] if global__['basic_auth']    @wsdl = global__['wsdl'] if global__['wsdl']    @action = @action.to_sym if @action.match /^\:/  end
+  def create_request(params = {})    if @template      rqst = File.open(Dir.pwd + "/#{@template}", 'r')      content = rqst.read      rqst.close      params.map {|key, value| content = content.gsub(/\<\%\=\s*#{key}\s*\%\>/, value)} unless params == {}      content    else      nil    end  end
+  def execute(service, params)    define_globals(service)    client = create_client(@namespace, @endpoint)    request = {:xml => create_request(params)}    client.call(@action, request)  end
+  def create_client(namespace, endpoint)    if @wsdl      globals = {wsdl: @wsdl}    else      globals = {namespace: namespace, endpoint: endpoint, ssl_verify_mode: :none,                 raise_errors: true, soap_version: 2,                 pretty_print_xml: true}    end    globals[:basic_auth] = @basic_auth if @basic_auth    Savon::Client.new(globals)  end
+end
