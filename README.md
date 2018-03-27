@@ -16,3 +16,13 @@ To use SOAPService class , follow the steps below<br/>
           My_Soap_Service: <br/>
              namespace: 'http://xyz_WSD__LINK'<br/>
              template:  'location of request template relative to working directory'<br/>
+5) Define a parameter inside template file using <%= %> tag.<br/>
+       Example:  <Envelope><br/>
+                      <body><br/>
+                       <input><%= input_field %></input><br/>
+                      </body> <br/>
+                 </Envelope><br/>
+6) Create an instace of SOAPService into your working ruby file.<br/>
+       Example: soap_client = SOAPService.new<br/>
+7) Call execute method using web service name defined in service_config.yml file and parameters to be replaced from template xml file.<br/>
+       Example: response = soap_client.execute('My_Soap_Service', {'input_field' => 'value'})<br/>
